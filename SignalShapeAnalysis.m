@@ -1,4 +1,4 @@
-%%calculatine positive spoikes vs negative spikes
+
 
 clear all
 close all
