@@ -14,27 +14,17 @@ AmplitudePopulation = {};
 
 for ff = 1: length(folderList)
          ff
-    %cd(['' folderList{1,ff} '/CSV/'])
     cd(['' folderList{1,ff} '/'])
-    
-%     if ff == 2
-%         start = 3;
-%         endList = 3;
-%     else
-%         start = 1;
-%         endList = 2;
-%     end
+   
 
       
     for pp = 1: length(populationList)
         pp
 
-%         if pp == 3
+
 
             cd(['' populationList{1,pp} ''])
-%         else
-%             cd(['' populationList{1,pp} '/analysed/'])
-%         end
+
 
         mea_folder = dir('*');
         posMEAPop= [];
@@ -141,11 +131,9 @@ for ff = 1: length(folderList)
                                         IndexPreviousPeakCorrected = index(b(end));
                                         amp1 = spikeAmp - baseline; %meanSignal(1,1); %spike - baseline
                                         
-%                                         if -pks(b(end)) > 0
-%                                             slope1 = meanSignal(1,20) ./ 20 ;
-%                                         else
+
                                         slope1 = (meanSignal(1,20) - (-pks(b(end)))) ./ (20 - index(b(end)));
-%                                         end
+
                                 
                                     end
 
@@ -153,10 +141,10 @@ for ff = 1: length(folderList)
                                         [minValue,closestIndex] = min(abs(meanSignal(20:end)-meanSignal(1,1)));
                                         amp2 =  minValue - baseline; %- meanSignal(1,1);
                                         Duration = closestIndex*0.04;
-                                        %PeakToPeak = ((closestIndex+20) - IndexPreviousPeakCorrected)*0.04;
+                                        
                                     else
                                         amp2 = (-pks(a(1))) - baseline; %- meanSignal(1,1);
-                                       % PeakToPeak = (index(a(1)) - IndexPreviousPeakCorrected)*0.04;
+                                       
 
                                         Duration = (index(a(1)) - 20)*0.04; %from time points to ms
                                         [minValue,closestIndex] = min(abs(meanSignal(index(a(1)):end)-meanSignal(1,1)));
@@ -168,9 +156,7 @@ for ff = 1: length(folderList)
                                     
                                     neg = neg + length(signalClustIdx);
                                     [pks, index] = findpeaks(meanSignal);
-                                    %  Signal2 = meanSignal(1,index(1):index(2));
-
-                                    %[maximum2 lmax2] = max(meanSignal(1,index>lmin));
+                                   
                                     a = find(index>20);
                                     b = find(index < 20);
 
@@ -193,11 +179,11 @@ for ff = 1: length(folderList)
                                         IndexLastPeakCorrected = 60;
                                         amp2 = minValue - baseline; %- meanSignal(1,1);
                                         Duration = closestIndex*0.04;
-                                        %PeakToPeak = ((closestIndex+20) - index(b(end)))*0.04;
+                                        
                                     else
                                         amp2 = pks(a(1)) - baseline; %- meanSignal(1,1);
                                         IndexLastPeakCorrected = index(a(1));
-                                        %PeakToPeak = (index(a(1)) - index(b(end)))*0.04;
+                                        
                                         Duration = (index(a(1)) - 20)*0.04; %from time points to ms
                                         [minValue,closestIndex] = min(abs(meanSignal(index(a(1)):end)- baseline)); %-meanSignal(1,1)));
                                         slope2 = (minValue - amp2) ./ (closestIndex - index(a(1)));
@@ -217,8 +203,7 @@ for ff = 1: length(folderList)
                                             other = other + length(signalClustIdx);
                                             spikeType = 3;
                                         end
-                                        %[minimum2 lmin2] = min(meanSignal(1,index(a(1)) : end));
-                                        %indexMinCorrected = index(a(1))+lmin2;
+                                        
 
                                     else
                                         if Duration < 0.3
@@ -232,16 +217,7 @@ for ff = 1: length(folderList)
                                     end
                                 end
 
-                                %                         spikePoints(cc, 1) = amp1;
-                                %                         spikePoints(cc, 2) = amp2;
-                                %                         spikePoints(cc, 3) = SpikeDuration;
-                                %
-                                %
-                                %
-                                %
-                                %                         spikePoints(cc, 4) = slope1;
-                                %
-                                %                         spikePoints(cc,5) = slope2;
+                                
                                 SpikeTypeMat = [SpikeTypeMat; spikeType];
                                 SlopeMat = [SlopeMat; slope1];
                                 DurationMat = [DurationMat; Duration];
